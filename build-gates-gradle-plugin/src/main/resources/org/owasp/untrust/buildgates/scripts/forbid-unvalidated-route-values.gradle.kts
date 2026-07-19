@@ -52,7 +52,7 @@ data class RouteValueContext(
     val mapType: TypeMirror
 )
 
-val VALIDATED_VALUE_TYPE_NAME = "org.owasp.untrust.vv.ValidatedValue"
+val VALIDATED_VALUE_TYPE_NAME = "org.owasp.untrust.vv.foundation.ValidatedValue"
 
 val ROUTE_HANDLER_ANNOTATIONS = setOf(
     "RequestMapping",

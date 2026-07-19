@@ -502,8 +502,9 @@ val forbidUnsafeImports by tasks.registering {
     group = "verification"
     description = "Fails the build when forbidden imports are used outside approved packages or files."
 
-    val alternativesFile = rootProject.file("approved_import_alternatives.json")
-    val allowanceFile = rootProject.file("allow_unsafe_imports.json")
+    val rootJsonConfigFile = rootProject.extensions.extraProperties["rootJsonConfigFile"] as (String) -> File
+    val alternativesFile = rootJsonConfigFile("approved_import_alternatives.json")
+    val allowanceFile = rootJsonConfigFile("allow_unsafe_imports.json")
 
     val checkedSourceFiles = fileTree(rootProject.projectDir) {
         include("**/src/main/java/**/*.java")

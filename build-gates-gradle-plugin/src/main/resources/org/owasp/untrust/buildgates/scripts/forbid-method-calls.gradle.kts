@@ -464,7 +464,7 @@ val forbidMethodCalls by tasks.registering {
     group = "verification"
     description = "Fails the build when configured receiver types call blocked methods or methods outside an allow-list."
 
-    val configFile = rootProject.file("method_call_guardrail.json")
+    val configFile = (rootProject.extensions.extraProperties["rootJsonConfigFile"] as (String) -> File)("method_call_guardrail.json")
     val javaExtension = project.extensions.getByType<JavaPluginExtension>()
     val sourceSets = javaExtension.sourceSets
 

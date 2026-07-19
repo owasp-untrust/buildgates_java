@@ -346,7 +346,7 @@ fun typeArguments(typeText: String?): List<String> {
 
 fun validatedValueTypeArgumentText(extendsText: String?): String? {
     val superType = rawTypeName(extendsText)
-    if (superType != "ValidatedValue" && superType != "org.owasp.untrust.vv.ValidatedValue") {
+    if (superType != "ValidatedValue" && superType != "org.owasp.untrust.vv.foundation.ValidatedValue") {
         return null
     }
 
@@ -374,7 +374,7 @@ fun isCustomValidationForRareCasesTraits(classInfo: ValidatedValueClassInfo): Bo
 
 fun isDirectValidatedValue(classInfo: ValidatedValueClassInfo): Boolean {
     val superType = rawTypeName(classInfo.extendsText)
-    return superType == "ValidatedValue" || superType == "org.owasp.untrust.vv.ValidatedValue"
+    return superType == "ValidatedValue" || superType == "org.owasp.untrust.vv.foundation.ValidatedValue"
 }
 
 fun isDirectValidationTraits(typeText: String?): Boolean {
@@ -685,10 +685,11 @@ val forbidValidatedValueInheritance by tasks.registering {
         inputs.files(allJava)
         inputs.files(compileClasspath)
     }
-    inputs.file(rootProject.file("validated_value_guardrail.json"))
+    val configFile = (rootProject.extensions.extraProperties["rootJsonConfigFile"] as (String) -> File)("validated_value_guardrail.json")
+    inputs.file(configFile)
 
     doLast {
-        val config = readValidatedValueGuardConfig(rootProject.file("validated_value_guardrail.json"))
+        val config = readValidatedValueGuardConfig(configFile)
         val findingsBySource = sourceSets
             .map { sourceSet -> inspectSourceSetForValidatedValueInheritance(sourceSet, rootProject.projectDir, config) }
             .fold(emptyMap<String, List<ValidatedValueFinding>>()) { acc, findings ->

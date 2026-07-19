@@ -226,7 +226,7 @@ val forbidLocalCatches by tasks.registering {
     group = "verification"
     description = "Fails the build when Java catch blocks lack documented local justification."
 
-    val configFile = rootProject.file("local_catch_guardrail.json")
+    val configFile = (rootProject.extensions.extraProperties["rootJsonConfigFile"] as (String) -> File)("local_catch_guardrail.json")
     val javaExtension = project.extensions.getByType<JavaPluginExtension>()
     val sourceSets = javaExtension.sourceSets
 

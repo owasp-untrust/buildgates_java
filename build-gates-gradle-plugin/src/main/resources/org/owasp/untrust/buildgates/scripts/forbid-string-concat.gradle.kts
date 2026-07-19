@@ -749,7 +749,7 @@ val forbidStringConcat by tasks.registering {
     group = "verification"
     description = "Fails the build when Java string concatenation is used outside documented safe scopes."
 
-    val configFile = rootProject.file("string_concat_guardrail.json")
+    val configFile = (rootProject.extensions.extraProperties["rootJsonConfigFile"] as (String) -> File)("string_concat_guardrail.json")
     val javaExtension = project.extensions.getByType<JavaPluginExtension>()
     val sourceSets = javaExtension.sourceSets
 

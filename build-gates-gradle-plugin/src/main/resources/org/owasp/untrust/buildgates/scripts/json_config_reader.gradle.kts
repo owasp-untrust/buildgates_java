@@ -7,6 +7,16 @@ fun jsonConfigPath(rawPath: String, baseDir: File): File {
     return if (file.isAbsolute) file else File(baseDir, rawPath)
 }
 
+fun rootJsonConfigFile(fileName: String): File {
+    val localFile = rootProject.file(fileName)
+    if (localFile.exists()) {
+        return localFile
+    }
+
+    val parentFile = rootProject.rootDir.parentFile?.resolve(fileName)
+    return parentFile ?: localFile
+}
+
 fun jsonConfigContext(file: File): String {
     return file.relativeToOrSelf(rootProject.rootDir).path.replace(File.separatorChar, '/')
 }
@@ -165,4 +175,7 @@ fun readJsonConfigObject(file: File, includeStack: List<File> = emptyList()): Ma
 
 rootProject.extensions.extraProperties["readJsonConfigObject"] = { file: File ->
     readJsonConfigObject(file)
+}
+rootProject.extensions.extraProperties["rootJsonConfigFile"] = { fileName: String ->
+    rootJsonConfigFile(fileName)
 }
