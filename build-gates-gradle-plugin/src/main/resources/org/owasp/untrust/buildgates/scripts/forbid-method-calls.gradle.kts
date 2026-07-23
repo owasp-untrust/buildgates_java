@@ -193,7 +193,7 @@ fun readOptionalMethodNameSet(map: Map<*, *>, key: String, context: String): Set
 
 fun readMethodCallGuardConfig(file: File): MethodCallGuardConfig {
     if (!file.exists()) {
-        return MethodCallGuardConfig(DEFAULT_MINIMUM_ALLOW_REASON_CHARACTERS, emptyList())
+        throw GradleException("method_call_guardrail.json is required.")
     }
 
     val parsed = readJsonConfigObject(file)
