@@ -46,9 +46,10 @@ class UntrustBuildGatesPlugin : Plugin<Project> {
             "forbid-unvalidated-route-values.gradle.kts",
             "forbid-namespace-classes.gradle.kts",
             "forbid-validated-value-inheritance.gradle.kts",
+            "forbid-direct-response-status-exception.gradle.kts",
+            "require-controller-preauthorize.gradle.kts",
             "forbid-jooq-toctou.gradle.kts",
             "forbid-public-value-on-sensitive-types.gradle.kts"
         )
     }
 }
-
